@@ -2,7 +2,9 @@ package com.getcode.service.member.response;
 
 import com.getcode.domain.member.Member;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class MemberResponse {
     private String email;
     private String password;

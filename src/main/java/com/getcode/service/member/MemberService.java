@@ -1,16 +1,11 @@
 package com.getcode.service.member;
 
-import com.getcode.controller.member.request.MemberCreateRequest;
 import com.getcode.domain.member.Member;
 import com.getcode.repository.MemberRepository;
 import com.getcode.service.member.request.SignupDto;
 import com.getcode.service.member.response.MemberResponse;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public MemberResponse signup(SignupDto req) {
-        Member savedMember = memberRepository.save(req.toEntity());
+        Member member = req.toEntity();
+        member.passwordEncoding(passwordEncoder);
+        Member savedMember = memberRepository.save(member);
         return MemberResponse.of(savedMember);
     }
 
