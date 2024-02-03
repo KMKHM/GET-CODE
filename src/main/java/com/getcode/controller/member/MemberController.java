@@ -10,10 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api")
 public class MemberController {
 
     private final MemberService memberService;
@@ -21,5 +24,11 @@ public class MemberController {
     @PostMapping("/sign-up")
     public ResponseEntity<MemberResponse> signup(@Valid @RequestBody MemberCreateRequest req) {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.signup(req.toServiceRequest()));
+    }
+
+    @PostMapping("/emails/verification-requests")
+    public ResponseEntity sendEmail(@RequestParam("email") String email) {
+        memberService.sendCode(email);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
