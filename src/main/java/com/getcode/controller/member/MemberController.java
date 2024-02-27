@@ -1,7 +1,9 @@
 package com.getcode.controller.member;
 
+import com.getcode.common.ApiResponse;
 import com.getcode.controller.member.request.MemberCreateRequest;
 import com.getcode.service.member.MemberService;
+import com.getcode.service.member.response.EmailVerificationResponse;
 import com.getcode.service.member.response.MemberResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +32,11 @@ public class MemberController {
     public ResponseEntity sendEmail(@RequestParam("email") String email) {
         memberService.sendCode(email);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/emails/verify-code")
+    public ApiResponse<EmailVerificationResponse> verifyCode(@RequestParam("email") String email,
+                                                             @RequestParam("code") String code) {
+        return memberService.verifyCode(email, code);
     }
 }
