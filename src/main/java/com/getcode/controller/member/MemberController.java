@@ -31,4 +31,9 @@ public class MemberController {
         memberService.sendCode(email);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/emails/verify-code")
+    public ResponseEntity verifyCode(@RequestParam("email") String email, @RequestParam("code") String code) {
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.verifyCode(email, code));
+    }
 }

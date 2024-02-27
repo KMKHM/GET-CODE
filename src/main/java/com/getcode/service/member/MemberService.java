@@ -62,5 +62,10 @@ public class MemberService {
 
         return sb.toString();
     }
+
+    // 인증번호 검증
+    public boolean verifyCode(String email, String code) {
+        return code.equals(redisService.getValues(AUTH_CODE_PREFIX + email));
+    }
 }
 

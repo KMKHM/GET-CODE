@@ -3,7 +3,6 @@ package com.getcode.service.member.request;
 import static com.getcode.domain.member.Role.*;
 
 import com.getcode.domain.member.Member;
-import com.getcode.domain.member.Role;
 import lombok.Builder;
 import lombok.Getter;
 
